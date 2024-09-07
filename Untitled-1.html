@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自动移动的图片</title>
+    <style>
+        /* 设置图片的样式 */
+        #movableImage {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 需要自动移动的图片 -->
+    <img src="C:\\Users\\chen\\Pictures\\梦泪.jpg" id="movableImage" alt="Movable" />
+
+    <script>
+        // 获取图片元素
+        var img = document.getElementById("movableImage");
+
+        // 获取浏览器窗口的宽高
+        var windowWidth = window.innerWidth;
+        var windowHeight = window.innerHeight;
+
+        // 图片的初始位置
+        var posX = Math.random() * (windowWidth - img.width);
+        var posY = Math.random() * (windowHeight - img.height);
+
+        // 设置图片初始位置
+        img.style.left = posX + "px";
+        img.style.top = posY + "px";
+
+        // 设置图片移动的速度（可以自行调整）
+        var speedX = 2;
+        var speedY = 2;
+
+        // 每隔一段时间移动图片
+        function moveImage() {
+            posX += speedX;
+            posY += speedY;
+
+            // 边界检测，防止图片超出浏览器窗口
+            if (posX + img.width >= windowWidth || posX <= 0) {
+                speedX = -speedX; // 水平方向反转
+            }
+            if (posY + img.height >= windowHeight || posY <= 0) {
+                speedY = -speedY; // 垂直方向反转
+            }
+
+            // 更新图片位置
+            img.style.left = posX + "px";
+            img.style.top = posY + "px";
+        }
+
+        // 设置定时器，每10ms移动一次图片
+        setInterval(moveImage, 10);
+
+        // 监听窗口大小变化，更新窗口宽高
+        window.onresize = function() {
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+        };
+    </script>
+
+</body>
+</html>
